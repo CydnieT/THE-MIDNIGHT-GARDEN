@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Midnight Garden by Murphy Made</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    :root {
+      --bg: #050308;
+      --panel: #0d0a12;
+      --accent: #c8a85f;
+      --accent-soft: #5b4e3e;
+      --text-main: #f5f1ea;
+      --text-soft: #c7beb0;
+      --border-soft: rgba(200, 168, 95, 0.3);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #151018 0, var(--bg) 45%, #020106 100%);
+      color: var(--text-main);
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .shell {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 1.5rem 1.25rem 4rem;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: linear-gradient(to bottom, rgba(5,3,8,0.96), rgba(5,3,8,0.95), transparent);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(200,168,95,0.09);
+    }
+
+    .nav-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0.75rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .brand {
+      display: flex;
+      flex-direction: column;
+      gap: 0.1rem;
+    }
+
+    .brand-title {
+      font-family: "Cormorant Garamond", "Playfair Display", "Times New Roman", serif;
+      letter-spacing: 0.2em;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+    }
+
+    .brand-sub {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--text-soft);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+    }
+
+    .nav-links a {
+      position: relative;
+      padding-bottom: 0.25rem;
+    }
+
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 0;
+      height: 1px;
+      background: var(--accent);
+      transition: width 0.22s ease-out;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    @media (max-width: 720px) {
+      .nav-inner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .nav-links {
+        flex-wrap: wrap;
+        justify-content: flex-start;
+      }
+    }
+
+    main {
+      padding-top: 1rem;
+    }
+
+    section {
+      margin-top: 3rem;
+    }
+
+    .panel {
+      background: radial-gradient(circle at top left, rgba(200,168,95,0.12), transparent 55%),
+                  linear-gradient(to bottom, rgba(13,10,18,0.96), rgba(5,3,8,0.98));
+      border-radius: 22px;
+      border: 1px solid var(--border-soft);
+      padding: 2rem 1.75rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .panel::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        radial-gradient(circle at top left, rgba(255,255,255,0.02), transparent 60%),
+        radial-gradient(circle at bottom right, rgba(0,0,0,0.65), transparent 55%);
+      mix-blend-mode: screen;
+      opacity: 0.9;
+      pointer-events: none;
+    }
+
+    .panel-inner {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-kicker {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--text-soft);
+      margin-bottom: 0.85rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .hero-kicker span.dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: var(--accent);
+      box-shadow: 0 0 18px rgba(200,168,95,0.8);
+    }
+
+    .hero-title {
+      font-family: "Cormorant Garamond", "Playfair Display", "Times New Roman", serif;
+      font-size: clamp(2.3rem, 5vw, 3.1rem);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-bottom: 0.2rem;
+    }
+
+    .hero-subtitle {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      color: var(--text-soft);
+      margin-bottom: 1.7rem;
+    }
+
+    .hero-body {
+      max-width: 28rem;
+      font-size: 0.94rem;
+      color: var(--text-soft);
+      margin-bottom: 1.8rem;
+    }
+
+    .hero-body strong {
+      color: var(--text-main);
+      font-weight: 500;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      align-items: center;
+    }
+
+    .btn {
+      border-radius: 999px;
+      border: 1px solid var(--accent);
+      padding: 0.6rem 1.6rem;
+      font-size: 0.78rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      background: transparent;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: background 0.18s ease-out, color 0.18s ease-out, transform 0.18s ease-out, box-shadow 0.18s ease-out;
+    }
+
+    .btn-primary {
+      background: radial-gradient(circle at top, #e7d0a2, #c8a85f);
+      color: #1b130c;
+      box-shadow: 0 0 22px rgba(200,168,95,0.45);
+      border-color: transparent;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 0 28px rgba(200,168,95,0.6);
+    }
+
+    .btn-ghost {
+      color: var(--text-soft);
+      background: rgba(12,9,16,0.7);
+    }
+
+    .btn-ghost:hover {
+      background: rgba(200,168,95,0.08);
+      color: var(--text-main);
+    }
+
+    .btn span.pip {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: var(--bg);
+    }
+
+    .hero-note {
+      font-size: 0.72rem;
+      color: var(--text-soft);
+      margin-top: 0.8rem;
+    }
+
+    .sigil {
+      position: absolute;
+      right: 10%;
+      top: 18%;
+      width: 170px;
+      height: 170px;
+      border-radius: 999px;
+      border: 1px solid rgba(200,168,95,0.4);
+      box-shadow:
+        0 0 26px rgba(200,168,95,0.45),
+        inset 0 0 14px rgba(0,0,0,0.75);
+      display: grid;
+      place-items: center;
+      background: radial-gradient(circle at top, rgba(200,168,95,0.18), rgba(5,3,8,1));
+    }
+
+    .sigil-inner {
+      width: 76%;
+      height: 76%;
+      border-radius: inherit;
+      border: 1px solid rgba(200,168,95,0.45);
+      display: grid;
+      place-items: center;
+      position: relative;
+    }
+
+    .sigil-moon {
+      width: 46px;
+      height: 46px;
+      border-radius: 999px;
+      border: 1px solid rgba(200,168,95,0.55);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 0 18px rgba(200,168,95,0.7);
+    }
+
+    .sigil-moon::before {
+      content: "";
+      position: absolute;
+      inset: -4px;
+      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.95), rgba(200,168,95,0.05));
+    }
+
+    .sigil-moon::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: radial-gradient(circle at 10% 10%, rgba(5,3,8,1), transparent 60%);
+      transform: translateX(25%);
+    }
+
+    .sigil-stars {
+      position: absolute;
+      inset: 12% 10%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      pointer-events: none;
+    }
+
+    .sigil-stars span {
+      width: 5px;
+      height: 5px;
+      border-radius: 999px;
+      background: var(--accent);
+      box-shadow: 0 0 12px rgba(200,168,95,0.9);
+      align-self: flex-start;
+    }
+
+    .sigil-stars span:nth-child(2) {
+      align-self: center;
+      width: 4px;
+      height: 4px;
+    }
+
+    .sigil-stars span:nth-child(3) {
+      align-self: flex-end;
+    }
+
+    .sigil-thorns {
+      position: absolute;
+      inset: 8%;
+      border-radius: inherit;
+      border: 1px dashed rgba(200,168,95,0.25);
+    }
+
+    .sigil-caption {
+      position: absolute;
+      bottom: -1.8rem;
+      width: 100%;
+      text-align: center;
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--text-soft);
+    }
+
+    @media (max-width: 880px) {
+      .sigil {
+        display: none;
+      }
+    }
+
+    .section-heading {
+      font-family: "Cormorant Garamond", "Playfair Display", "Times New Roman", serif;
+      font-size: 1.4rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      margin-bottom: 0.35rem;
+    }
+
+    .section-kicker {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--text-soft);
+      margin-bottom: 1.1rem;
+    }
+
+    .section-body {
+      font-size: 0.9rem;
+      color: var(--text-soft);
+      max-width: 34rem;
+      margin-bottom: 1.4rem;
+    }
+
+    .grid-3 {
+      display: grid;
+      gap: 1.25rem;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    @media (max-width: 880px) {
+      .grid-3 {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .card {
+      background: radial-gradient(circle at top left, rgba(200,168,95,0.16), rgba(5,3,8,0.96));
+      border-radius: 18px;
+      border: 1px solid rgba(200,168,95,0.26);
+      padding: 1.2rem 1.1rem 1.3rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top, rgba(255,255,255,0.04), transparent 65%);
+      opacity: 0.7;
+      mix-blend-mode: screen;
+      pointer-events: none;
+    }
+
+    .card-inner {
+      position: relative;
+      z-index: 1;
+    }
+
+    .card-label {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--text-soft);
+      margin-bottom: 0.5rem;
+    }
+
+    .card-title {
+      font-size: 0.98rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      margin-bottom: 0.35rem;
+    }
+
+    .card-text {
+      font-size: 0.85rem;
+      color: var(--text-soft);
+      margin-bottom: 0.75rem;
+    }
+
+    .card-link {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--accent);
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .pill {
+      font-size: 0.7rem;
+      border-radius: 999px;
+      padding: 0.25rem 0.7rem;
+      border: 1px solid rgba(200,168,95,0.32);
+      color: var(--text-soft);
+      background: rgba(5,3,8,0.8);
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(0, 2.2fr);
+      gap: 2rem;
+      align-items: flex-start;
+    }
+
+    @media (max-width: 880px) {
+      .two-col {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .list-soft {
+      list-style: none;
+      padding-left: 0;
+      font-size: 0.88rem;
+      color: var(--text-soft);
+    }
+
+    .list-soft li {
+      margin-bottom: 0.4rem;
+      display: flex;
+      gap: 0.55rem;
+      align-items: flex-start;
+    }
+
+    .list-soft span.bullet {
+      margin-top: 0.25rem;
+      width: 4px;
+      height: 4px;
+      border-radius: 999px;
+      background: var(--accent);
+      flex-shrink: 0;
+    }
+
+    footer {
+      border-top: 1px solid rgba(200,168,95,0.18);
+      margin-top: 3rem;
+      padding: 1.8rem 1.25rem 0.8rem;
+      font-size: 0.75rem;
+      color: var(--text-soft);
+    }
+
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      justify-content: space-between;
+    }
+
+    .footer-block h4 {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      margin-bottom: 0.55rem;
+      color: var(--text-main);
+    }
+
+    .footer-links {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .footer-links li {
+      margin-bottom: 0.28rem;
+    }
+
+    .footer-links a {
+      color: var(--text-soft);
+      font-size: 0.78rem;
+    }
+
+    .footer-meta {
+      margin-top: 1.2rem;
+      width: 100%;
+      text-align: right;
+      font-size: 0.7rem;
+      color: rgba(160,150,138,0.9);
+    }
+
+    @media (max-width: 720px) {
+      .footer-meta {
+        text-align: left;
+      }
+    }
+
+    .anchor-space {
+      scroll-margin-top: 76px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="nav-inner">
+      <div class="brand">
+        <div class="brand-title">MIDNIGHT GARDEN</div>
+        <div class="brand-sub">By Murphy Made</div>
+      </div>
+      <nav class="nav-links">
+        <a href="#home">Home</a>
+        <a href="#shop">Shop</a>
+        <a href="#archive">Archive</a>
+        <a href="#about">About</a>
+        <a href="#services">Services</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="shell">
+    <main>
+
+      <!-- Hero -->
+      <section id="home" class="anchor-space">
+        <div class="panel">
+          <div class="panel-inner">
+            <div class="hero-kicker">
+              <span class="dot"></span>
+              LUXURY WITCHCRAFT STUDIO
+            </div>
+            <h1 class="hero-title">Midnight Garden</h1>
+            <div class="hero-subtitle">Dark feminine tools for intentional living</div>
+            <p class="hero-body">
+              <strong>Midnight Garden by Murphy Made</strong> is a dark feminine digital studio crafting
+              planners, journals, ritual tools, and art for women who bloom in the shadows and rise
+              on their own timing.
+            </p>
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="#shop">
+                <span class="pip"></span>
+                Explore the shop
+              </a>
+              <a class="btn btn-ghost" href="#free">
+                Free ritual pages
+              </a>
+            </div>
+            <p class="hero-note">
+              Digital planners, shadow work journals, lunar tools, and printable art — all delivered instantly.
+            </p>
+
+            <div class="sigil" aria-hidden="true">
+              <div class="sigil-inner">
+                <div class="sigil-thorns"></div>
+                <div class="sigil-moon"></div>
+                <div class="sigil-stars">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </div>
+              </div>
+              <div class="sigil-caption">The Midnight Garden Sigil</div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- Shop overview -->
+      <section id="shop" class="anchor-space">
+        <div class="panel">
+          <div class="panel-inner">
+            <div class="section-kicker">The Studio</div>
+            <h2 class="section-heading">Shop the Garden</h2>
+            <p class="section-body">
+              Every piece in the studio is designed to hold both your magic and your real life:
+              the rituals and the rent, the grief and the glow-up, the cycles and the spreadsheets.
+            </p>
+
+            <div class="grid-3">
+              <article class="card">
+                <div class="card-inner">
+                  <div class="card-label">Collection I</div>
+                  <h3 class="card-title">Planners &amp; Journals</h3>
+                  <p class="card-text">
+                    Digital planners and journals for lunar living, shadow work, and intentional
+                    daily structure.
+                  </p>
+                  <div class="pill-row">
+                    <span class="pill">Luxury Witch Planner</span>
+                    <span class="pill">Shadow Work Journal</span>
+                    <span class="pill">Glow-Up Guide</span>
+                  </div>
+                  <div style="margin-top:0.9rem;">
+                    <a class="card-link" href="#shop">View on Etsy →</a>
+                  </div>
+                </div>
+              </article>
+
+              <article class="card">
+                <div class="card-inner">
+                  <div class="card-label">Collection II</div>
+                  <h3 class="card-title">Rituals &amp; Moon Tools</h3>
+                  <p class="card-text">
+                    Manifestation planners, moon phase calendars, and ritual worksheets to anchor
+                    your practice in something beautiful and functional.
+                  </p>
+                  <div class="pill-row">
+                    <span class="pill">Moon Cycle Calendar</span>
+                    <span class="pill">Ritual Planner</span>
+                    <span class="pill">Manifestation Pages</span>
+                  </div>
+                  <div style="margin-top:0.9rem;">
+                    <a class="card-link" href="#shop">Explore rituals →</a>
+                  </div>
+                </div>
+              </article>
+
+              <article class="card">
+                <div class="card-inner">
+                  <div class="card-label">Collection III</div>
+                  <h3 class="card-title">Art &amp; Aesthetic</h3>
+                  <p class="card-text">
+                    Witchy wall art and dark feminine designs to dress your space in celestial,
+                    botanical luxury.
+                  </p>
+                  <div class="pill-row">
+                    <span class="pill">Printable Wall Art</span>
+                    <span class="pill">Celestial Prints</span>
+                    <span class="pill">Botanical Occult</span>
+                  </div>
+                  <div style="margin-top:0.9rem;">
+                    <a class="card-link" href="#shop">View prints →</a>
+                  </div>
+                </div>
+              </article>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- Free ritual section -->
+      <section id="free" class="anchor-space">
+        <div class="panel">
+          <div class="panel-inner">
+            <div class="section-kicker">Free entry</div>
+            <h2 class="section-heading">Shadow Work Starter Pack</h2>
+            <p class="section-body">
+              Begin with a gentle collection of pages: grounding prompts, reflection questions,
+              and a simple moon tracker to help you notice your own cycles.
+            </p>
+
+            <ul class="list-soft">
+              <li><span class="bullet"></span><span>Shadow work journaling starter spread</span></li>
+              <li><span class="bullet"></span><span>Emotion check-in + regulation reminder page</span></li>
+              <li><span class="bullet"></span><span>Mini moon phase calendar for the year</span></li>
+            </ul>
+
+            <div class="hero-actions" style="margin-top:1.4rem;">
+              <a class="btn btn-primary" href="#contact">
+                Get the free pack
+              </a>
+              <a class="btn btn-ghost" href="#archive">
+                Read the Archive
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Archive / blog preview -->
+      <section id="archive" class="anchor-space">
+        <div class="panel">
+          <div class="panel-inner">
+            <div class="section-kicker">The Archive</div>
+            <h2 class="section-heading">Words from the Garden</h2>
+            <p class="section-body">
+              The Midnight Garden Archive is a quiet corner for essays, rituals, and reflections:
+              shadow work, lunar living, feminine energy, and the soft, serious work of becoming
+              yourself.
+            </p>
+
+            <div class="grid-3">
+              <article class="card">
+                <div class="card-inner">
+                  <div class="card-label">Shadow work</div>
+                  <h3 class="card-title">What Shadow Work Really Is</h3>
+                  <p class="card-text">
+                    A gentle, grounded explanation of shadow work that doesn&apos;t rely on fear,
+                    drama, or guru theatrics.
+                  </p>
+                  <a class="card-link" href="#archive">Coming soon</a>
+                </div>
+              </article>
+
+              <article class="card">
+                <div class="card-inner">
+                  <div class="card-label">Lunar ritual</div>
+                  <h3 class="card-title">A Soft New Moon Ritual</h3>
+                  <p class="card-text">
+                    A simple, repeatable new moon ritual for beginners, burnout survivors, and
+                    high-functioning overthinkers.
+                  </p>
+                  <a class="card-link" href="#archive">Coming soon</a>
+                </div>
+              </article>
+
+              <article class="card">
+                <div class="card-inner">
+                  <div class="card-label">Dark feminine</div>
+                  <h3 class="card-title">Dark Feminine as Daily Practice</h3>
+                  <p class="card-text">
+                    Boundaries, self-respect, and quiet power rituals woven into how you move
+                    through your actual life.
+                  </p>
+                  <a class="card-link" href="#archive">Coming soon</a>
+                </div>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- About -->
+      <section id="about" class="anchor-space">
+        <div class="panel">
+          <div class="panel-inner two-col">
+            <div>
+              <div class="section-kicker">The maker</div>
+              <h2 class="section-heading">The woman behind the Garden</h2>
+              <p class="section-body">
+                I&apos;m Cydnie, the creator of Midnight Garden &mdash; an ordained minister,
+                Kentucky notary signing agent, and designer of dark feminine tools for intentional
+                living. This studio was built for women like me: exhausted and evolving, soft and
+                strategic, done with chaos but not done with themselves.
+              </p>
+              <p class="section-body">
+                Midnight Garden is where structure meets ritual. Every planner, journal, and page
+                is designed to hold both your humanity and your magic: the bills and appointments
+                and to-do lists, but also the grief, the rebirth, the shadow work, and the quiet
+                little miracles.
+              </p>
+              <p class="section-body">
+                Visually, the Garden speaks in black velvet, antique gold, celestial geometry,
+                roses, and thorns. It&apos;s for those of us who bloom in the dark and don&apos;t
+                feel the need to explain that to anyone.
+              </p>
+            </div>
+            <div>
+              <ul class="list-soft">
+                <li><span class="bullet"></span><span>Ordained minister &amp; ceremony writer</span></li>
+                <li><span class="bullet"></span><span>Kentucky notary &amp; loan signing agent</span></li>
+                <li><span class="bullet"></span><span>Digital studio owner &amp; designer</span></li>
+                <li><span class="bullet"></span><span>Builder of rituals for women who are tired but not finished</span></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Services -->
+      <section id="services" class="anchor-space">
+        <div class="panel">
+          <div class="panel-inner two-col">
+            <div>
+              <div class="section-kicker">Beyond the screen</div>
+              <h2 class="section-heading">Practical magic &amp; paperwork</h2>
+              <p class="section-body">
+                Some things still need ink, signatures, and sacred witnesses. Alongside the digital
+                studio, I offer grounded, real-world services under the Midnight Garden umbrella.
+              </p>
+              <ul class="list-soft">
+                <li><span class="bullet"></span><span><strong>Notary &amp; Loan Signing (Kentucky)</strong> &mdash; general notary work and loan signing services for documents that matter.</span></li>
+                <li><span class="bullet"></span><span><strong>Ministerial &amp; Ceremony Services</strong> &mdash; weddings, vow renewals, simple blessings, and custom-written spiritual or symbolic rituals for major life transitions.</span></li>
+              </ul>
+            </div>
+            <div>
+              <div class="card">
+                <div class="card-inner">
+                  <div class="card-label">Booking</div>
+                  <h3 class="card-title">Service inquiries</h3>
+                  <p class="card-text">
+                    To request notary, signing, or ceremony services, please reach out with your
+                    location, date, and what you&apos;re needing support with.
+                  </p>
+                  <a class="card-link" href="#contact">Use the contact form →</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Contact -->
+      <section id="contact" class="anchor-space">
+        <div class="panel">
+          <div class="panel-inner two-col">
+            <div>
+              <div class="section-kicker">Contact</div>
+              <h2 class="section-heading">Enter the Garden</h2>
+              <p class="section-body">
+                For product questions, collaborations, custom ritual work, or service requests,
+                use the details here. Midnight Garden is built to feel personal, not corporate.
+              </p>
+              <ul class="list-soft">
+                <li><span class="bullet"></span><span><strong>Email</strong>: <a href="mailto:TheeMidnightGarden@gmail.com">TheeMidnightGarden@gmail.com</a></span></li>
+                <li><span class="bullet"></span><span><strong>Etsy</strong>: link to your Midnight Garden storefront</span></li>
+                <li><span class="bullet"></span><span><strong>Pinterest</strong>: link to your main traffic hub</span></li>
+              </ul>
+            </div>
+            <div>
+              <p class="section-body">
+                You can also embed a simple contact form here if your platform supports it:
+                name, email, what you&apos;re reaching out about (products, notary, ceremony,
+                other), and a short message.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-block">
+        <h4>Midnight Garden</h4>
+        <p>Luxury witchcraft studio for dark feminine, intentional living.</p>
+      </div>
+      <div class="footer-block">
+        <h4>Explore</h4>
+        <ul class="footer-links">
+          <li><a href="#shop">Shop</a></li>
+          <li><a href="#archive">Archive</a></li>
+          <li><a href="#free">Free Ritual Pages</a></li>
+        </ul>
+      </div>
+      <div class="footer-block">
+        <h4>Services</h4>
+        <ul class="footer-links">
+          <li><a href="#services">Notary &amp; Signing (KY)</a></li>
+          <li><a href="#services">Ministerial Ceremonies</a></li>
+        </ul>
+      </div>
+      <div class="footer-meta">
+        © 2025 Midnight Garden by Murphy Made. All rights reserved.
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
